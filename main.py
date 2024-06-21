@@ -10,7 +10,11 @@ async def read_root():
 async def add(a: int, b:int):
     return {"result": a + b}
 
+@app.get("/nhan")
+async def add(a: int, b:int):
+    return {"result": a * b}
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
-# 1
