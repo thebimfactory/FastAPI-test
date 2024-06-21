@@ -1,29 +1,31 @@
 from fastapi import FastAPI, Depends, HTTPException, Security
 from fastapi.security.api_key import APIKeyHeader
 
+API_KEY = "TBF-123"
+API_KEY_NAME = "X-API-Key"
+api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
+
 app = FastAPI()
 
-# Định nghĩa API key header
-api_key_header = APIKeyHeader(name="X-API-Key")
+async def get_api_key(api_key: str = Security(api_key_header)):
+    if api_key == API_KEY:
+        return api_key
+    else:
+        raise HTTPException(
+            status_code=403,
+            detail="Could not validate credentials",
+        )
 
-# Xác thực API key
-def get_api_key(api_key: str = Depends(api_key_header)):
-    correct_api_key = "TBF-123"  # Thay đổi giá trị này thành API key của bạn
-    if api_key != correct_api_key:
-        raise HTTPException(status_code=403, detail="Invalid API Key")
-    return api_key
 
-@app.get("/")
-async def read_root():
-    return {"message": "Xin chào bạn đến với API của TBF - Business Development Team!"}
-
-@app.get("/add")
-async def add(a: int, b: int, api_key: str = Depends(get_api_key)):
-    return {"result": a + b}
-
-@app.get("/nhan")
-async def multiply(a: int, b: int, api_key: str = Depends(get_api_key)):
-    return {"result": a * b}
+@app.get("/calculate")
+async def calculate(a: int, b: int, api_key: str = Depends(get_api_key)):
+    addition = a + b
+    multiplication = a * b
+    return {
+        "message": "Hello, World",
+        "addition_result": addition,
+        "multiplication_result": multiplication
+    }
 
 if __name__ == "__main__":
     import uvicorn
