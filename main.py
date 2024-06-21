@@ -17,7 +17,7 @@ async def get_api_key(api_key: str = Security(api_key_header)):
         )
         
 @app.get("/")
-async def read_root(api_key: str = Depends(get_api_key)):
+async def read_root():
     return {"Xin chào bạn đến với API của TBF - Business Development Team!"}
 
 
