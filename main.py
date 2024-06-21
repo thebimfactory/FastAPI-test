@@ -15,6 +15,10 @@ async def get_api_key(api_key: str = Security(api_key_header)):
             status_code=403,
             detail="Could not validate credentials",
         )
+        
+@app.get("/")
+async def read_root(api_key: str = Depends(get_api_key)):
+    return {"Xin chào bạn đến với API của TBF - Business Development Team!"}
 
 
 @app.get("/calculate")
@@ -22,9 +26,8 @@ async def calculate(a: int, b: int, api_key: str = Depends(get_api_key)):
     addition = a + b
     multiplication = a * b
     return {
-        "message": "Hello, World",
-        "addition_result": addition,
-        "multiplication_result": multiplication
+        "Cong": addition,
+        "Nhan": multiplication
     }
 
 if __name__ == "__main__":
