@@ -24,14 +24,14 @@ async def read_root():
     return {"Xin chào bạn đến với API của TBF - Business Development Team!"}
 
 
-@app.get("/calculate")
-async def calculate(a: int, b: int, api_key: str = Depends(get_api_key)):
-    addition = a + b
-    multiplication = a * b
-    return {
-        "Cong": addition,
-        "Nhan": multiplication
-    }
+# @app.get("/calculate")
+# async def calculate(a: int, b: int, api_key: str = Depends(get_api_key)):
+#     addition = a + b
+#     multiplication = a * b
+#     return {
+#         "Cong": addition,
+#         "Nhan": multiplication
+#     }
     
 
 # Số hàng và cột
@@ -44,8 +44,14 @@ data = np.random.randint(0, 101, size=(num_rows, num_columns))
 # Tạo bảng với pandas
 df = pd.DataFrame(data, columns=['Column1', 'Column2', 'Column3'])
 
-# Hiển thị bảng
-print(df)
+
+# Chuyển bảng thành dạng JSON
+json_data = df.to_json(orient='records')
+
+
+@app.get("/table")
+async def table(api_key: str = Depends(get_api_key)):
+    return json_data
 
 
 if __name__ == "__main__":
