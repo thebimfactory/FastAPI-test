@@ -33,3 +33,14 @@ else:
 
 print("Data 1: ", data1)
 print("Data 2: ", data2)
+
+
+# @app.get("/calculate")
+# async def calculate(a: int, b: int, api_key: str = Depends(get_api_key)):
+#     addition = a + b
+#     multiplication = a * b
+#     return {
+#         "Cong": addition,
+#         "Nhan": multiplication
+#     }
+    

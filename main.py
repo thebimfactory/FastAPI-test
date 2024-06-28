@@ -24,16 +24,6 @@ async def read_root():
     return {"Xin chào bạn đến với API của TBF - Business Development Team!"}
 
 
-# @app.get("/calculate")
-# async def calculate(a: int, b: int, api_key: str = Depends(get_api_key)):
-#     addition = a + b
-#     multiplication = a * b
-#     return {
-#         "Cong": addition,
-#         "Nhan": multiplication
-#     }
-    
-
 # Số hàng và cột
 num_rows = 10
 num_columns = 3
@@ -51,7 +41,7 @@ json_data = df.to_json(orient='records')
 
 @app.get("/table")
 async def table(api_key: str = Depends(get_api_key)):
-    return json_data
+    return {json_data}
 
 
 if __name__ == "__main__":
