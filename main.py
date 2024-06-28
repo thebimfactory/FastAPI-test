@@ -1,5 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, Security
 from fastapi.security.api_key import APIKeyHeader
+import pandas as pd
+import numpy as np
 
 API_KEY = "TBF-123"
 API_KEY_NAME = "X-API-Key"
@@ -16,6 +18,7 @@ async def get_api_key(api_key: str = Security(api_key_header)):
             detail="Could not validate credentials",
         )
         
+        
 @app.get("/")
 async def read_root():
     return {"Xin chào bạn đến với API của TBF - Business Development Team!"}
@@ -29,6 +32,21 @@ async def calculate(a: int, b: int, api_key: str = Depends(get_api_key)):
         "Cong": addition,
         "Nhan": multiplication
     }
+    
+
+# Số hàng và cột
+num_rows = 10
+num_columns = 3
+
+# Tạo dữ liệu ngẫu nhiên
+data = np.random.randint(0, 101, size=(num_rows, num_columns))
+
+# Tạo bảng với pandas
+df = pd.DataFrame(data, columns=['Column1', 'Column2', 'Column3'])
+
+# Hiển thị bảng
+print(df)
+
 
 if __name__ == "__main__":
     import uvicorn
